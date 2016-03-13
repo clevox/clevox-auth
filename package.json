@@ -1,0 +1,19 @@
+{
+  "name": "node-auth-server",
+  "version": "0.0.1",
+  "description": "An awesome AuthServer built with Node.js Express Redis Mongo",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "~4.11.1"
+  },
+  "engines": {
+    "node": "0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/destromas1/node-auth-server.git"
+  }
+}
