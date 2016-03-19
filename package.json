@@ -1,13 +1,13 @@
 {
   "name": "node-auth-server",
   "version": "0.0.1",
-  "description": "An awesome AuthServer built with Node.js Express Redis Mongo",
+  "description": "An awesome AuthServer built with Node.js Restify Redis Mongo",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "~4.11.1"
+    "restify" : "4.0.4"
   },
   "engines": {
     "node": "0.12.7"
