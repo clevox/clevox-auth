@@ -3,6 +3,8 @@ var restify = require('restify'),
 
 var server = restify.createServer();
 
+var routes = require('./routes');
+
 server.get('/ping', function (req, res, next) {
   res.send("pong");
 });
