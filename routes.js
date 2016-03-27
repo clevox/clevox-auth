@@ -5,11 +5,9 @@ module.exports = function(app) {
     });
     
     var registrationHandler = require('../app/handlers/registration-handler');
-	// var allowedFeaturesHandler = require('../app/handlers/allowed-features-handler');
+
 	
-	// app.get('/api/IsFeatureAllowed/:id', featureAllowedHandler.IsFeatureAllowed);
-	
-	app.get('/api/', registrationHandler);
+	app.post('/api/registration', registrationHandler);
     
 
 };
