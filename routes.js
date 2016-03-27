@@ -4,10 +4,10 @@ module.exports = function(app) {
         res.send("pong");
     });
     
-    var registrationHandler = require('../app/handlers/registration-handler');
+    var registrationHandler = require('./app/handlers/registration-handler');
 
 	
-	app.post('/api/registration', registrationHandler);
+	app.post('/api/registration', registrationHandler.registerUser);
     
 
 };
