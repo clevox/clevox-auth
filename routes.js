@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-    app.get('/ping', function(req, res, next) {
+    app.get('/api/ping', function(req, res, next) {
         res.send("pong");
     });
     
