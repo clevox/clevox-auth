@@ -1,10 +1,13 @@
-var userModel = require('../models/user');
+var user = require('../models/user');
 
 var registerUser = function(req, res) {
 
-  console.log("registerUser", req.body);
+  user.saveUser(req.body, function () {
+    console.log("registerUser", req.body);
+    res.send({ success: true });
+  });
   
-  res.send({ success: true });
+  
 
 };
 
