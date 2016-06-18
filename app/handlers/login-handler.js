@@ -2,6 +2,7 @@ var user = require('../models/user');
 
 var login = function(req, res) {
 
+    
 
 };
 

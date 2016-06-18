@@ -28,6 +28,11 @@ var saveUser = function (user , callback) {
 
 };
 
+var checkUserForLogin = function (params) {
+  
+};
+
 module.exports = {
-  saveUser: saveUser
+  saveUser: saveUser,
+  checkUserForLogin : checkUserForLogin
 };
