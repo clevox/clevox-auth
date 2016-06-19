@@ -28,10 +28,16 @@ var saveUser = function (user , callback) {
 
 };
 
-var checkUserForLogin = function (email , password) {  
-  MongoClient.connect('mongodb://localhost:27017/AuthDB', function (err, db) {    
+var checkUserForLogin = function (email , password , callback) {  
+  MongoClient.connect('mongodb://localhost:27017/AuthDB', function (err, db) {
     db.collection('user').findOne({email: email , password : password}, function(err, user) {
+      
+      if (err) {
+        console.log(err);
+      }      
       console.log(user);
+
+      callback(err, user);
     });
   });
   
