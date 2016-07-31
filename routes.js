@@ -10,7 +10,7 @@ module.exports = function (app) {
 
     app.post('/api/registration', registrationHandler.registerUser);
 
-    app.post('/api/login', loginHandler.login)
+    app.post('/api/login', loginHandler.login);
 
 
 };
