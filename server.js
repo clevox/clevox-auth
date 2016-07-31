@@ -1,8 +1,10 @@
-var restify = require('restify'),
-  port = 5001;
+var restify = require('restify');
+var redis = require("redis");
+var global = require('./global')
 
-var redis = require("redis"),
-  redisClient = redis.createClient();
+var port = 5001;
+
+var redisClient = redis.createClient();
 
 redisClient.on("error", function (err) {
   console.log("redis Error " + err);
@@ -10,6 +12,7 @@ redisClient.on("error", function (err) {
 
 redisClient.on("connect", function () {
   console.log("redis connected");
+  global.redisClient = redisClient;  
 });
 
 var server = restify.createServer();
