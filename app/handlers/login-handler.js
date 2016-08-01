@@ -7,7 +7,11 @@ var login = function(req, res) {
   console.log("Login Request came", userEmail, password);
   
   user.checkUserForLogin(userEmail, password, function (err, user) {
-    res.send(user);
+    
+    if (err) {
+      return res.status(500).send({ success : false, error: 'Server Error!' });
+    }
+    res.status(200).send(user);
   });
 
 };
