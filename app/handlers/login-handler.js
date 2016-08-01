@@ -1,4 +1,5 @@
 var user = require('../models/user');
+var tokenHelper = require('./../helpers/token-helper');
 
 var login = function(req, res) {
 
@@ -9,9 +10,10 @@ var login = function(req, res) {
   user.checkUserForLogin(userEmail, password, function (err, user) {
     
     if (err) {
-      return res.status(500).send({ success : false, error: 'Server Error!' });
+      return res.send({ success : false, error: 'Server Error!' });
     }
-    res.status(200).send(user);
+    tokenHelper.createToken(user);
+    res.send(user);
   });
 
 };
