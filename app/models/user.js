@@ -19,7 +19,7 @@ var saveUser = function (user , callback) {
       return;
     }
     
-    insertDocument(db, { userId: user.userId, email: user.email, password : user.password, createdDate: new Date() }, function () {
+    insertDocument(db, { userId: user.userId, email: user.email, firstName : user.firstName , lastName : user.lastName, password : user.password, createdDate: new Date() }, function () {
       db.close();
       callback();
     });

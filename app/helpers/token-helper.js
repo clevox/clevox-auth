@@ -21,7 +21,7 @@ var createToken = function(user , callback) {
   global.redisClient.set(tokenData.userId, JSON.stringify(tokenData));
 
   if (callback) {
-    callback(tokenData);
+    callback({userId : user.email ,  token : token , expired : tokenData.expired , firstName : user.firstName , lastName : user.lastName});
   }
 
 };
