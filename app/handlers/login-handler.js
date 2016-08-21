@@ -12,7 +12,7 @@ var login = function(req, res) {
     if (err) {
       return res.send({ success : false, error: 'Server Error!' });
     }
-    tokenHelper.createToken(user , function (data) {
+    tokenHelper.createToken(user , function (err,data) {
       return res.send(data);
     });
   });

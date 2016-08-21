@@ -7,23 +7,34 @@ var createToken = function(user , callback) {
   var date = new Date();
   var expired = new Date();
   expired.setDate(expired.getDate() + 7);
-  
 
   console.log("createToken");
+  
+  global.redisClient.get("user.email", function (err, value) {
 
-  var tokenData = {
-    userId: user.email,
-    created: date,
-    expired: new Date(expired),
-    token: token
-  };
+    if (err) {
+      return callback(err, null);
+    }
 
-  global.redisClient.set(tokenData.userId, JSON.stringify(tokenData));
+    if (value) {
+      console.log("redisClient.get", value);
+      return callback(null, value);
+    }
 
-  if (callback) {
-    callback({userId : user.email ,  token : token , expired : tokenData.expired , firstName : user.firstName , lastName : user.lastName});
-  }
+    var tokenData = {
+      userId: user.email,
+      created: date,
+      expired: new Date(expired),
+      token: token
+    };
 
+    global.redisClient.set(tokenData.userId, JSON.stringify(tokenData), function (err, reply) {
+      console.log("redisClient.get", err, reply);
+      return callback({userId : user.email ,  token : token , expired : tokenData.expired , firstName : user.firstName , lastName : user.lastName});
+    });
+    
+  });
+  
 };
 
 var generateGuid = function () {
