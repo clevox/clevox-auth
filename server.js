@@ -15,6 +15,14 @@ redisClient.on("connect", function () {
   global.redisClient = redisClient;  
 });
 
+var MongoClient = require('mongodb').MongoClient;
+
+MongoClient.connect('mongodb://localhost:27017/AuthDB', function (err, db) {
+  if (err) return console.log(err);
+  global.mongoDb = db;
+  console.log("mongoDb connected");
+});
+
 var server = restify.createServer();
 
 server.use(restify.bodyParser());

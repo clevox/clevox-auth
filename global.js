@@ -1,6 +1,6 @@
 var global = {
 
-  mongoClient: null,
+  mongoDb: null,
 
   redisClient: null
 };
