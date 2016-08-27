@@ -1,47 +1,31 @@
-var MongoClient = require('mongodb').MongoClient;
+//var MongoClient = require('mongodb').MongoClient;
+var global = require('../../global');
 
-var insertDocument = function (db, user, callback) {
+var insertDocument = function (user, callback) {
   console.log("user------------------------------>",user);
-  db.collection('user').insertOne(user, function (err, result) {
-    
+  global.mongoDb.collection('user').insertOne(user, function (err, result) {
     console.log("Inserted User.");
     callback(result);
   });
 };
 
-var saveUser = function (user , callback) {
-  MongoClient.connect('mongodb://localhost:27017/AuthDB', function (err, db) {
-
-    console.log("user passed", user);
-
-    if (err) {
-      console.log(err);
-      return;
-    }
-    
-    insertDocument(db, { userId: user.userId, email: user.email, firstName : user.firstName , lastName : user.lastName, password : user.password, createdDate: new Date() }, function () {
-      db.close();
-      callback();
-    });
-
+var saveUser = function (user, callback) {
+  insertDocument({ userId: user.userId, email: user.email, firstName: user.firstName, lastName: user.lastName, password: user.password, createdDate: new Date() }, function () {
+    callback();
   });
-
 };
 
-var checkUserForLogin = function (email , password , callback) {  
-  MongoClient.connect('mongodb://localhost:27017/AuthDB', function (err, db) {    
-    db.collection('user').findOne({email: email , password : password}, function(err, user) {      
-      if (err) {
-        console.log(err);
-        return callback(err, null);
-      }
-      console.log(user);
+var checkUserForLogin = function (email, password, callback) {
+  
+  global.mongoDb.collection('user').findOne({ email: email, password: password }, function (err, user) {
+    if (err) {
+      console.log(err);
+      return callback(err, null);
+    }
+    console.log(user);
 
-      return callback(err, user);
-    });
+    return callback(err, user);
   });
-  
-  
 };
 
 module.exports = {
