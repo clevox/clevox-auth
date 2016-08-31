@@ -1,6 +1,6 @@
 var restify = require('restify');
 var redis = require("redis");
-var global = require('./global')
+var global = require('./global');
 
 var port = 5001;
 
