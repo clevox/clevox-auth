@@ -1,16 +1,7 @@
 var user = require('../models/user');
 var tokenHelper = require('./../helpers/token-helper');
+var cryptoHelper = require('./../helpers/crypto-helper');
 
-var crypto = require('crypto'),
-    algorithm = 'aes-256-ctr',
-    secret = 'AqwerersdfaAqwWqwTtd6F$#%^&*546363463456093498234098324092384928340234qdhjahBHDWSAWEJbsbcdsfkjher2%345sdgsdg';
-
-function encrypt(text){
-  var cipher = crypto.createCipher(algorithm, secret);
-  var crypted = cipher.update(text, 'utf8', 'hex');
-  crypted += cipher.final('hex');
-  return crypted;
-}
 
 var login = function(req, res) {
 
@@ -18,7 +9,7 @@ var login = function(req, res) {
   var password = req.body.password;
   console.log("Login Request came", userEmail, password);
 
-  password = encrypt(password);
+  password = cryptoHelper.encrypt(password);
   
   user.checkUserForLogin(userEmail, password, function (err, user) {
     
