@@ -1,17 +1,15 @@
 //var MongoClient = require('mongodb').MongoClient;
 var global = require('../../global');
 
-var insertDocument = function (user, callback) {
-  console.log("user------------------------------>",user);
-  global.mongoDb.collection('user').insertOne(user, function (err, result) {
-    console.log("Inserted User.");
-    callback(result);
-  });
-};
-
 var saveUser = function (user, callback) {
-  insertDocument({ userId: user.userId, email: user.email, firstName: user.firstName, lastName: user.lastName, password: user.password, createdDate: new Date() }, function () {
-    callback();
+  console.log("user------------------------------>",user);
+  global.mongoDb.collection('user').insertOne({ userId: user.userId, email: user.email, firstName: user.firstName, lastName: user.lastName, password: user.password, createdDate: new Date() }, function (err, result) {
+    console.log("Inserted User.");
+    if (err) {
+      console.log(err);
+      return callback(err, null);
+    }
+    callback(null, result);
   });
 };
 
@@ -24,7 +22,7 @@ var checkUserForLogin = function (email, password, callback) {
     }
     console.log(user);
 
-    return callback(err, user);
+    return callback(null, user);
   });
 };
 

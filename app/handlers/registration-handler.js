@@ -3,9 +3,12 @@ var cryptoHelper = require('./../helpers/crypto-helper');
 
 var registerUser = function (req, res) {
   req.body.password = cryptoHelper.encrypt(req.body.password);
-  user.saveUser(req.body, function () {
-    console.log("registerUser", req.body);
-    res.send({ success: true });
+  user.saveUser(req.body, function (err, result) {
+    if (err) {
+      return res.send({ success: false });
+    }
+    console.log("registerUser Saved");
+    res.send({ success: true });    
   });
   
 };
