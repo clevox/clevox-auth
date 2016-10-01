@@ -1,7 +1,7 @@
 var user = require('../models/user');
 var global = require('./../../global');
 
-var createToken = function(user , callback) {
+var createToken = function (user, callback) {
 
   var token = generateGuid();
   var date = new Date();
@@ -9,31 +9,38 @@ var createToken = function(user , callback) {
   expired.setDate(expired.getDate() + 7);
 
   console.log("createToken");
-  
-  global.redisClient.get("user.email", function (err, value) {
 
+  global.redisClient.get(user.email, function (err, value) {
     if (err) {
       return callback(err, null);
     }
+    value = JSON.parse(value);
+    // console.log(value, new Date());
 
-    if (value) {
-      console.log("redisClient.get", value);
-      return callback(null, value);
+    if (value && (new Date(value.expired) >= new Date())) {
+      console.log("IToken", value.expired);
+      return callback(null, { userId: user.email, token: value.token, expired: value.expired, firstName: user.firstName, lastName: user.lastName });
+    } else {
+      console.log("NToken");
+      var tokenData = {
+        userId: user.email,
+        created: date,
+        expired: new Date(expired),
+        token: token
+      };
+
+      global.redisClient.set(tokenData.userId, JSON.stringify(tokenData), function (err, reply) {
+        console.log("redisClient.set", err, reply);
+        if (err) {
+          return callback(err, null);
+        }
+        return callback(null, { userId: user.email, token: token, expired: tokenData.expired, firstName: user.firstName, lastName: user.lastName });
+      });
     }
-
-    var tokenData = {
-      userId: user.email,
-      created: date,
-      expired: new Date(expired),
-      token: token
-    };
-
-    global.redisClient.set(tokenData.userId, JSON.stringify(tokenData), function (err, reply) {
-      console.log("redisClient.set", err, reply);
-      return callback(null, {userId : user.email ,  token : token , expired : tokenData.expired , firstName : user.firstName , lastName : user.lastName});
-    });
-    
+      
   });
+
+  
   
 };
 
